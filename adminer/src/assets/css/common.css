@@ -1,0 +1,24 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+a{
+    text-decoration: none;
+}
+ul li{
+    list-style: none;
+}
+
+.m_t25{
+    margin-top: 25px;
+}
+.m_t15{
+    margin-top: 15px;
+}
+.tar{
+    text-align: right;
+}
+
+.m_r10{
+    margin-right: 10px;
+}

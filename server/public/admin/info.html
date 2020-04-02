@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .content_info {
+            width: 100%;
+            max-width: 640px;
+            margin: 0 auto;
+            overflow-y: auto;
+            box-sizing: border-box;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .titlebox {
+            box-sizing: border-box;
+            padding: 12px 0;
+        }
+
+        .titlebox>h1 {
+            font-size: 24px;
+            color: #222222;
+        }
+
+        .infoitem {
+            box-sizing: border-box;
+            padding: 5px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .source {
+            color: #9892f3;
+            font-size: 16px;
+            margin-right: 8px;
+            line-height: 20px;
+        }
+
+        .pubtime {
+            font-size: 14px;
+            color: #a5a5a5;
+            line-height: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div  id="app" class="content_info">
+        <div class="titlebox">
+            <h1>{{info.title}}</h1>
+            <div class="infoitem">
+                <a class="source">来源：{{info.media}}</a>
+                <span class="pubtime">{{ settime(info.pubtime)}}</span>
+            </div>
+        </div>
+
+        <div class="infobox" v-html="info.content">
+
+        </div>
+    </div>
+</body>
+
+
+<script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js "></script>
+<script src="https://cdn.bootcss.com/axios/0.19.2/axios.min.js"></script>
+<script src="https://cdn.bootcss.com/qs/6.7.0/qs.min.js"></script>
+<script>
+    var _id = window.location.href.split('?id=')[1]
+    var qs = Qs
+    var vm = new Vue({
+        el: '#app',
+        data() {
+            return {
+                info: {}
+            }
+        },
+        mounted() {
+            axios.post('http://192.168.0.107:234/getnews/id', qs.stringify({ _id })).then(res => {
+                this.info = res.data.data[0]
+            })
+        },
+        methods: {
+            settime(time) {
+                let d = new Date(parseInt(time));
+                return `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日 ${d.getHours()}:${d.getMinutes()} `
+            }
+        },
+    })
+</script>
+
+</html>
